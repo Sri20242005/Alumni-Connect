@@ -14,10 +14,8 @@ function Dashboard() {
 
     return (
         <div className="min-h-screen bg-gray-100">
-
             {/* Navbar */}
             <nav className="bg-white shadow-sm px-6 py-4 flex items-center justify-between">
-
                 <Link
                     to="/dashboard"
                     className="text-2xl font-bold text-blue-600"
@@ -39,26 +37,23 @@ function Dashboard() {
                 </div>
             </nav>
 
-
             {/* Main Content */}
-            <main className="max-w-7xl mx-auto px-6 py-10">
+            <main className="max-w-6xl mx-auto px-6 py-10">
 
-                {/* Welcome Section */}
-                <div className="mb-8">
+                {/* Welcome */}
+                <div className="mb-10">
                     <h1 className="text-3xl font-bold text-gray-800">
                         Welcome, {user?.name || "User"}!
                     </h1>
 
                     <p className="text-gray-600 mt-2">
-                        Connect with alumni, find mentors, discover opportunities,
-                        and stay engaged with your college community.
+                        Connect with alumni, find mentors, and build meaningful
+                        connections with your college community.
                     </p>
                 </div>
 
-
-                {/* Dashboard Cards */}
+                {/* Main Features */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
 
                     {/* Alumni Directory */}
                     <div className="bg-white rounded-xl shadow-md p-6">
@@ -66,9 +61,9 @@ function Dashboard() {
                             Alumni Directory
                         </h2>
 
-                        <p className="text-gray-600 mb-4">
-                            Find and connect with alumni based on batch, branch,
-                            company, designation, and location.
+                        <p className="text-gray-600 mb-6">
+                            Search and connect with alumni based on their batch,
+                            branch, company, designation, and location.
                         </p>
 
                         <button
@@ -79,86 +74,52 @@ function Dashboard() {
                         </button>
                     </div>
 
-
                     {/* Mentorship */}
                     <div className="bg-white rounded-xl shadow-md p-6">
                         <h2 className="text-xl font-bold text-gray-800 mb-2">
                             Mentorship
                         </h2>
 
-                        <p className="text-gray-600 mb-4">
-                            Connect with experienced alumni and send mentorship
+                        <p className="text-gray-600 mb-6">
+                            Connect with alumni and send or manage mentorship
                             requests.
                         </p>
 
-                        <button
-                            onClick={() => alert("Mentorship coming soon")}
-                            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-                        >
-                            Find a Mentor
-                        </button>
+                        <div className="flex flex-wrap gap-3">
+
+                            {user?.role === "Student" && (
+                                <>
+                                    <button
+                                        onClick={() => navigate("/alumni")}
+                                        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                                    >
+                                        Find a Mentor
+                                    </button>
+
+                                    <button
+                                        onClick={() =>
+                                            navigate("/mentorship-requests")
+                                        }
+                                        className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700"
+                                    >
+                                        My Requests
+                                    </button>
+                                </>
+                            )}
+
+                            {user?.role === "Alumni" && (
+                                <button
+                                    onClick={() =>
+                                        navigate("/received-requests")
+                                    }
+                                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+                                >
+                                    Incoming Requests
+                                </button>
+                            )}
+
+                        </div>
                     </div>
-
-
-                    {/* Jobs & Internships */}
-                    <div className="bg-white rounded-xl shadow-md p-6">
-                        <h2 className="text-xl font-bold text-gray-800 mb-2">
-                            Jobs & Internships
-                        </h2>
-
-                        <p className="text-gray-600 mb-4">
-                            Discover job and internship opportunities shared by
-                            alumni.
-                        </p>
-
-                        <button
-                            onClick={() => alert("Jobs & Internships coming soon")}
-                            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-                        >
-                            View Opportunities
-                        </button>
-                    </div>
-
-
-                    {/* Events */}
-                    <div className="bg-white rounded-xl shadow-md p-6">
-                        <h2 className="text-xl font-bold text-gray-800 mb-2">
-                            Events
-                        </h2>
-
-                        <p className="text-gray-600 mb-4">
-                            Stay updated with alumni meets, webinars, reunions,
-                            and other college events.
-                        </p>
-
-                        <button
-                            onClick={() => alert("Events coming soon")}
-                            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-                        >
-                            View Events
-                        </button>
-                    </div>
-
-
-                    {/* Discussion Forum */}
-                    <div className="bg-white rounded-xl shadow-md p-6">
-                        <h2 className="text-xl font-bold text-gray-800 mb-2">
-                            Discussion Forum
-                        </h2>
-
-                        <p className="text-gray-600 mb-4">
-                            Ask questions, share knowledge, and interact with the
-                            alumni and student community.
-                        </p>
-
-                        <button
-                            onClick={() => alert("Discussion Forum coming soon")}
-                            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-                        >
-                            Open Forum
-                        </button>
-                    </div>
-
 
                     {/* My Profile */}
                     <div className="bg-white rounded-xl shadow-md p-6">
@@ -166,7 +127,7 @@ function Dashboard() {
                             My Profile
                         </h2>
 
-                        <p className="text-gray-600 mb-4">
+                        <p className="text-gray-600 mb-6">
                             View and update your academic and professional
                             information.
                         </p>
@@ -178,7 +139,6 @@ function Dashboard() {
                             View Profile
                         </button>
                     </div>
-
 
                 </div>
             </main>

@@ -7,6 +7,8 @@ import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import AlumniDirectory from "./pages/AlumniDirectory";
 import MentorProfile from "./pages/MentorProfile";
+import MentorshipRequests from "./pages/MentorshipRequests";
+import ReceivedRequests from "./pages/ReceivedRequests";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -16,11 +18,21 @@ function App() {
       <Routes>
 
         {/* Home */}
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={<Home />}
+        />
 
         {/* Authentication */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+
+        <Route
+          path="/register"
+          element={<Register />}
+        />
 
         {/* Dashboard */}
         <Route
@@ -32,7 +44,7 @@ function App() {
           }
         />
 
-        {/* My Profile */}
+        {/* Profile */}
         <Route
           path="/profile"
           element={
@@ -52,12 +64,32 @@ function App() {
           }
         />
 
-        {/* Mentor Profile */}
+        {/* Alumni Profile */}
         <Route
           path="/mentor-profile"
           element={
             <ProtectedRoute>
               <MentorProfile />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Student Mentorship Requests */}
+        <Route
+          path="/mentorship-requests"
+          element={
+            <ProtectedRoute>
+              <MentorshipRequests />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Alumni Received Requests */}
+        <Route
+          path="/received-requests"
+          element={
+            <ProtectedRoute>
+              <ReceivedRequests />
             </ProtectedRoute>
           }
         />

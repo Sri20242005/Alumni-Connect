@@ -1,8 +1,10 @@
 const Profile = require("../models/profile");
 
-// Create or update profile
+// Create or update my profile
 const createOrUpdateProfile = async (req, res) => {
     try {
+        const userId = req.user.userId;
+
         const {
             batch,
             branch,
@@ -10,8 +12,6 @@ const createOrUpdateProfile = async (req, res) => {
             designation,
             location,
         } = req.body;
-
-        const userId = req.user.userId;
 
         const profile = await Profile.findOneAndUpdate(
             { userId },
@@ -43,13 +43,15 @@ const createOrUpdateProfile = async (req, res) => {
     }
 };
 
-
-// Get logged-in user's profile
+// Get my profile
 const getMyProfile = async (req, res) => {
     try {
         const userId = req.user.userId;
 
-        const profile = await Profile.findOne({ userId });
+        const profile = await Profile.findOne({ userId }).populate(
+            "userId",
+            "name email role isVerified"
+        );
 
         if (!profile) {
             return res.status(404).json({
@@ -69,35 +71,36 @@ const getMyProfile = async (req, res) => {
     }
 };
 
-
-// Get all alumni profiles
+// Get all alumni
 const getAllAlumni = async (req, res) => {
     try {
-        const alumniProfiles = await Profile.find()
+        const profiles = await Profile.find()
             .populate({
                 path: "userId",
-                match: { role: "Alumni" },
                 select: "name email role isVerified",
-            });
+                match: {
+                    role: "Alumni",
+                },
+            })
+            .sort({ createdAt: -1 });
 
-        // Remove profiles whose user is not an Alumni
-        const filteredProfiles = alumniProfiles.filter(
+        // Remove profiles whose users are not alumni
+        const alumni = profiles.filter(
             (profile) => profile.userId !== null
         );
 
         res.status(200).json({
-            count: filteredProfiles.length,
-            alumni: filteredProfiles,
+            count: alumni.length,
+            profiles: alumni,
         });
     } catch (error) {
         console.error(error);
 
         res.status(500).json({
-            message: "Failed to get alumni profiles",
+            message: "Failed to get alumni",
         });
     }
 };
-
 
 module.exports = {
     createOrUpdateProfile,
